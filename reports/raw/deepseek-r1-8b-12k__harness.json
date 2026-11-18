@@ -1,0 +1,39 @@
+{
+  "model": "deepseek-r1-8b-12k",
+  "stamp": "20261118-031936",
+  "results": [
+    {
+      "agent": "harness",
+      "task": "hello_file",
+      "final": "",
+      "finish": "timeout",
+      "note": "TransportClosedError",
+      "tool_calls": 0,
+      "seconds": 301.2501207909954,
+      "startup_seconds": 1.9092705409857444,
+      "passed": false
+    },
+    {
+      "agent": "harness",
+      "task": "fix_add_bug",
+      "final": "",
+      "finish": "timeout",
+      "note": "TransportClosedError",
+      "tool_calls": 0,
+      "seconds": 301.50204920899705,
+      "startup_seconds": 5.786115708993748,
+      "passed": false
+    },
+    {
+      "agent": "harness",
+      "task": "count_errors",
+      "final": "",
+      "finish": "timeout",
+      "note": "TransportClosedError",
+      "tool_calls": 0,
+      "seconds": 301.7386360410019,
+      "startup_seconds": 8.367247082991526,
+      "passed": false
+    }
+  ]
+}

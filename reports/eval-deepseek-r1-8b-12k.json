@@ -1,0 +1,84 @@
+{
+  "model": "deepseek-r1-8b-12k",
+  "stamp": "20261118-031936",
+  "summary": {
+    "harness": {
+      "n": 3,
+      "passed": 0,
+      "success_rate": 0.0,
+      "median_s": 301.50204920899705,
+      "total_s": 904.4908060409944,
+      "tool_calls": 0
+    },
+    "baseline": {
+      "n": 3,
+      "passed": 0,
+      "success_rate": 0.0,
+      "median_s": 300.2029799160082,
+      "total_s": 900.8756671240262,
+      "tool_calls": 0
+    }
+  },
+  "results": [
+    {
+      "agent": "baseline",
+      "task": "hello_file",
+      "final": "",
+      "finish": "timeout",
+      "tool_calls": 0,
+      "seconds": 300.17078029201366,
+      "passed": false
+    },
+    {
+      "agent": "baseline",
+      "task": "fix_add_bug",
+      "final": "",
+      "finish": "timeout",
+      "tool_calls": 0,
+      "seconds": 300.2029799160082,
+      "passed": false
+    },
+    {
+      "agent": "baseline",
+      "task": "count_errors",
+      "final": "",
+      "finish": "timeout",
+      "tool_calls": 0,
+      "seconds": 300.5019069160044,
+      "passed": false
+    },
+    {
+      "agent": "harness",
+      "task": "hello_file",
+      "final": "",
+      "finish": "timeout",
+      "note": "TransportClosedError",
+      "tool_calls": 0,
+      "seconds": 301.2501207909954,
+      "startup_seconds": 1.9092705409857444,
+      "passed": false
+    },
+    {
+      "agent": "harness",
+      "task": "fix_add_bug",
+      "final": "",
+      "finish": "timeout",
+      "note": "TransportClosedError",
+      "tool_calls": 0,
+      "seconds": 301.50204920899705,
+      "startup_seconds": 5.786115708993748,
+      "passed": false
+    },
+    {
+      "agent": "harness",
+      "task": "count_errors",
+      "final": "",
+      "finish": "timeout",
+      "note": "TransportClosedError",
+      "tool_calls": 0,
+      "seconds": 301.7386360410019,
+      "startup_seconds": 8.367247082991526,
+      "passed": false
+    }
+  ]
+}

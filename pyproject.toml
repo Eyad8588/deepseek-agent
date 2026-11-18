@@ -1,0 +1,17 @@
+[project]
+name = "deepseek-agent"
+version = "0.1.0"
+description = "Sandboxed local coding agent on DeepSeek Harness (dsh), evaluated against a plain tool-calling loop"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "deepseek-harness-sdk==0.2.2rc2",
+    "mcp>=2.3.0",
+]
+
+[project.scripts]
+deepseek-agent-eval = "deepseek_agent.eval:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"

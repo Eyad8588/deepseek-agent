@@ -1,0 +1,33 @@
+{
+  "model": "deepseek-r1-8b-12k",
+  "stamp": "20261118-031936",
+  "results": [
+    {
+      "agent": "baseline",
+      "task": "hello_file",
+      "final": "",
+      "finish": "timeout",
+      "tool_calls": 0,
+      "seconds": 300.17078029201366,
+      "passed": false
+    },
+    {
+      "agent": "baseline",
+      "task": "fix_add_bug",
+      "final": "",
+      "finish": "timeout",
+      "tool_calls": 0,
+      "seconds": 300.2029799160082,
+      "passed": false
+    },
+    {
+      "agent": "baseline",
+      "task": "count_errors",
+      "final": "",
+      "finish": "timeout",
+      "tool_calls": 0,
+      "seconds": 300.5019069160044,
+      "passed": false
+    }
+  ]
+}
