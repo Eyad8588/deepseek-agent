@@ -7,3 +7,17 @@ runs/
 # graft's local graph cache — regenerable, not committed (run `graft build`).
 /graft/
 wheels/
+
+# secrets / env
+.env
+.env.*
+# sandbox work dirs and harness homes (eval writes these under runs/)
+**/workspace/
+dsh-home/
+# model files
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.whl
+models/
