@@ -2,6 +2,18 @@
 
 **A sandboxed coding agent built on DeepSeek Harness that runs fully offline against a local model, measured against a plain tool-calling loop.**
 
+## What it does (in simple words)
+
+You give the agent a small coding job, like "fix the bug in calc.py". It reads the files, edits them, and runs Python to check its own work, all on your own computer, with a local AI model and no cloud. The agent runs on DeepSeek's open-source agent framework, DeepSeek Harness. Its tools are fenced in: it can only touch files inside one work folder, run a short list of safe programs, and never reach the internet. To see whether the framework actually helps, the project scores it on 10 small tasks against a bare-bones loop that has the same model and the same tools.
+
+**How it works**
+
+1. **Task.** A small coding or file task and its starting files are copied into a fresh, empty work folder.
+2. **Agent.** The DeepSeek Harness agent works on the task with sandboxed tools (read file, write file, list folder, run an allowed program), using a model served locally by Ollama.
+3. **Result and eval.** A checker outside the sandbox tests the files the agent left behind (pass or fail). The eval records time and tool calls and compares Harness with the plain loop.
+
+![Agent fixing a bug](docs/screenshots/agent-run.png)
+
 ## What is DeepSeek Harness?
 
 **[DeepSeek Harness (`dsh`)](https://github.com/deepseek-ai/deepseek-harness)** is DeepSeek's open-source agent runtime. It is MIT-licensed and has been in developer preview since August 2026.
@@ -82,6 +94,13 @@ Optional, the DeepSeek model:
 ollama pull deepseek-r1:8b && ollama create deepseek-r1-8b-12k -f ollama/Modelfile.deepseek-r1-8b-12k
 ```
 
+See one task end to end, and the sandbox at work:
+
+```bash
+uv run python -m deepseek_agent.demo fix_add_bug      # one task, with a readable tool-call trace
+uv run python -m deepseek_agent.sandbox_demo          # escape attempts vs the sandbox
+```
+
 Run the eval:
 
 ```bash
@@ -137,19 +156,33 @@ deepseek-agent/
 │   ├── baseline.py              # plain tool-calling loop (stdlib only)
 │   ├── tasks.py                 # 10 tasks: seed files + checkers
 │   ├── eval.py                  # runner → reports/*.md, *.json
+│   ├── demo.py                  # one task with a readable trace (for screenshots)
+│   ├── sandbox_demo.py          # shows blocked vs allowed tool calls
 │   └── config.py                # model, endpoint, persona, limits
 ├── tests/test_sandbox.py        # sandbox escape tests
+├── scripts/snap.py              # renders the README screenshots with headless Chrome
 ├── ollama/                      # Modelfiles for the 12k-context aliases
 ├── reports/                     # eval results (markdown + JSON, raw per agent)
-└── docs/screenshots/            # screenshots (TODO)
+└── docs/screenshots/            # README screenshots
 ```
 
 ## Screenshots
 
-<!-- TODO: add screenshots in docs/screenshots/ and link them here -->
-- TODO: eval run in the terminal (`docs/screenshots/eval-run.png`)
-- TODO: `reports/eval.md` rendered (`docs/screenshots/eval-report.png`)
-- TODO: a Harness session log / Web UI view of an agent run (`docs/screenshots/harness-session.png`)
+**The agent solving a task.** The Harness agent reads `calc.py`, fixes `add()`, runs Python to check the fix, and the checker passes. The trace is read from Harness's own session log (`uv run python -m deepseek_agent.demo fix_add_bug`).
+
+![Agent run](docs/screenshots/agent-run.png)
+
+**The sandbox blocking unsafe actions.** `curl`, pipes, `rm`, `../` paths and `/etc` writes are refused by the tool layer. Python writing to `/tmp` or opening a socket is stopped by the macOS `sandbox-exec` jail (`uv run python -m deepseek_agent.sandbox_demo`).
+
+![Sandbox blocking commands](docs/screenshots/sandbox-blocked.png)
+
+**Eval results.** Both agents pass 10/10 with `qwen3.5:9b`. Harness is slower on most tasks, mainly from runtime startup and longer thinking.
+
+![Eval results](docs/screenshots/eval-results.png)
+
+**Harness web UI on the local model.** Stock `dsh web` with Ollama added as a custom OpenAI-compatible provider (`qwen3.5-9b-12k` selected). The full web profile's own prompt and tool list use about 10k tokens, roughly 80% of a 12k local context, so replies get cut short. That is why the agent uses the small `sdk-minimal` profile.
+
+![Harness web UI](docs/screenshots/harness-web-ui.png)
 
 ## Roadmap
 
